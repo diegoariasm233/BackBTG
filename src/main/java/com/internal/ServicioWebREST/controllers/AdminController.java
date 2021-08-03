@@ -1,25 +1,23 @@
 package com.internal.ServicioWebREST.controllers;
 
-
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.internal.ServicioWebREST.Models.Solicitud;
+import com.internal.ServicioWebREST.Models.AdminResp;
+import com.internal.ServicioWebREST.Models.Ticket;
 import com.internal.ServicioWebREST.Service.RQService;
 import com.internal.ServicioWebREST.Service.ValidateRQService;
 
 @Controller
-@RequestMapping("/Solicitudes")
-public class SolicitudController {
+@RequestMapping("/Admin")
+public class AdminController {
 	
 	@Autowired
 	private RQService rQService;
@@ -28,32 +26,28 @@ public class SolicitudController {
 	private ValidateRQService validateRQService;
 	
 	/**
-	 * Got Document from Ticket
+	 * Admin response solicitud
 	 * @param id
 	 * @param type
-	 * @return List of Documents
-	 */
-	@GetMapping( path = "/{Ticketid}/")
-    public @ResponseBody ResponseEntity<List<Solicitud>> getSolicitudesPorTicket(@PathVariable("Ticketid") String Ticketid) {
-        List<Solicitud> ret = this.rQService.getSolicitudesPorTicket(Ticketid);
-		return ResponseEntity.status(HttpStatus.OK).body(ret);
-    }	
-	
-	/**
-	 * Set Document at Ticket
-	 * @param id
-	 * @param type
-	 * @return Document
+	 * @return AdminResp
 	 */
 	@PostMapping( path = "/")
-    public @ResponseBody ResponseEntity<Solicitud> createSolicitud(@RequestBody Solicitud solicitud) {
-		if(!validateRQService.validateCreateSolicitud(solicitud)) {
-			Solicitud ret = this.rQService.createSolicitud(solicitud);
+    public @ResponseBody ResponseEntity<AdminResp> responseSolicitud(@RequestBody AdminResp adminResp) {
+		if(!validateRQService.validateResponseSolicitud(adminResp)) {
+			AdminResp ret = this.rQService.setResponsetoSolicitud(adminResp);
 			return ResponseEntity.status(HttpStatus.OK).body(ret);
 		}else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
     }	
-	
+	@PutMapping( path = "/")
+	public @ResponseBody ResponseEntity<AdminResp> updateAdminRespCalf(@RequestBody AdminResp adminResp) {
+		if(!validateRQService.validateUpdateTicketCalf(adminResp)) {
+			AdminResp ret = this.rQService.updateAdminRespCalf(adminResp);
+			return ResponseEntity.status(HttpStatus.OK).body(ret);
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+	}
 	
 }

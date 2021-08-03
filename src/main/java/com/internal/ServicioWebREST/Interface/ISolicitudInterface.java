@@ -9,7 +9,7 @@ import com.internal.ServicioWebREST.Models.Solicitud;
 
 public interface ISolicitudInterface extends MongoRepository<Solicitud, String> {
 	  
-	  @Query("{ 'identificacion' :  :#{#identifficacion} }")
-	  public List<Solicitud> findAllByIdentificacion(@Param("identifficacion") String identifficacion);
+	  @Query("{ '_id' :  :#{#no_radicado} }")
+	  public List<Solicitud> findOneByNo_Radicado(@Param("no_radicado") String no_radicado);
 	  
 }
