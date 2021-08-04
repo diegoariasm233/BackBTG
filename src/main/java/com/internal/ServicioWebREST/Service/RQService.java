@@ -103,7 +103,8 @@ public class RQService {
 				if(solicitud.getNo_radicado_assoc() != null) {
 					Optional<Solicitud> asoc = iSolicitudInterface.findById(solicitud.getNo_radicado_assoc());
 					Optional<AdminResp> adminResp = iAdminResp.findOneByNo_Radicado(solicitud.getNo_radicado_assoc());
-					if (adminResp.isPresent() && !adminResp.get().getSatifaccion().equals(Utils.SATIFACCION)) {
+					if (adminResp.isPresent() && !adminResp.get().getSatifaccion().equals(Utils.SATIFACCION)
+							&& adminResp.get().getCalificacion().equals(Utils.CALIFICADO)) {
 						solicitud.setTipo_solicitud(Utils.TYPE_RQ_RECLAMO);
 						validation = Boolean.TRUE;
 					} else if (asoc.isPresent() && !asoc.get().getTipo_solicitud().equals(Utils.TYPE_RQ_RECLAMO)) {

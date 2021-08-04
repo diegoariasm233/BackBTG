@@ -4,10 +4,19 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 public class AdminResp {
+	
 	@Id
-	public String id_response_admin;
+	public String idresponseadmin;
 	public String no_radicado;
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonProperty("date")
 	public LocalDateTime date;
 	public String text;
 	public String satifaccion;
@@ -15,19 +24,19 @@ public class AdminResp {
 	
 	public AdminResp() { }
 	
-	public AdminResp(String id_response_admin, String no_radicado, LocalDateTime date, String text, String satifaccion, String calificacion) {
+	public AdminResp(String idresponseadmin, String no_radicado, LocalDateTime date, String text, String satifaccion, String calificacion) {
 		super();
-		this.id_response_admin = id_response_admin;
+		this.idresponseadmin = idresponseadmin;
 		this.no_radicado = no_radicado;
 		this.date = date;
 		this.text = text;
 		this.satifaccion = satifaccion;
 	}
 	public String getId_response_admin() {
-		return id_response_admin;
+		return idresponseadmin;
 	}
-	public void setId_response_admin(String id_response_admin) {
-		this.id_response_admin = id_response_admin;
+	public void setId_response_admin(String idresponseadmin) {
+		this.idresponseadmin = idresponseadmin;
 	}
 	public String getNo_radicado() {
 		return no_radicado;
